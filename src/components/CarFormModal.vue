@@ -6,7 +6,7 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body">j
           <form @submit.prevent="createCar()">
 
             <div class="form-floating mb-3">
