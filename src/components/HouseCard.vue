@@ -11,8 +11,8 @@
             <h3>Listed by: {{ houseProp.creator.name }} on {{ houseProp.createdAt.toLocaleDateString() }}</h3>
             <img class="creator-picture" :src="houseProp.creator.picture" :alt="houseProp.creator.name">
           </div>
-          <div>
-            <button @click="removeHouse()" class="btn btn-danger"><i class="mdi mdi-delete" title="Delete this House"></i></button>
+          <div v-if="account.id == houseProp.creatorId">
+            <button @click="removeHouse()" class="btn btn-danger" title="Delete this House" type="button"><i class="mdi mdi-delete" ></i></button>
             <button @click="setHouseToEdit()" class="btn btn-warning ms-3" title="Edit House" type="button" data-bs-toggle="modal" data-bs-target="#formModal"><i class="mdi mdi-pencil" ></i></button>
           </div>
 
@@ -48,6 +48,11 @@ export default {
         } catch (error) {
           Pop.error(error.message)
         }
+      },
+
+      setHouseToEdit(){
+        const houseToEdit = props.houseProp
+        housesService.setHouseToEdit(houseToEdit)
       }
     }
   }

@@ -3,7 +3,7 @@
   <div class="row mb-3">
     <div class="col-12">
       <h1>Houses</h1>
-      <button class="btn btn-secondary fs-4" data-bs-toggle="modal" data-bs-target="#formModal">Create House Listing</button>
+      <button @click="clearActiveHouse()" v-if="account.id" class="btn btn-secondary fs-4" data-bs-toggle="modal" data-bs-target="#formModal">Create House Listing</button>
     </div>
   </div>
   <div class="row">
@@ -60,7 +60,12 @@ export default {
     })
     return {
       houses: computed(() => AppState.houses),
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+
+      clearActiveHouse() {
+        const dummyHouse = { description: 'pretty nice house'}
+        housesService.setHouseToEdit(dummyHouse)
+      }
     }
   },
   components: { HouseCard, ModalComponent, HouseForm }

@@ -1,5 +1,6 @@
 <template>
   <form @submit.prevent="handleSubmit()">
+    
     <div class="form-floating mb-3">
       <input v-model="editable.year" required type="number" class="form-control" id="year" placeholder="Year..." min="1700" max="2023">
       <label for="year">Year</label>
@@ -51,7 +52,12 @@ export default {
     onMounted(() => {
       setFormDefaults()
     })
-
+    watchEffect(() => {
+      if(AppState.activeHouse) {
+        const houseWithBrokenReference = { ...AppState.activeHouse }
+        editable.value = houseWithBrokenReference
+      }
+    })
     
     return {
       editable,
@@ -66,7 +72,9 @@ export default {
       async createHouse() {
         try {
           const houseData = editable.value
+
           await housesService.createHouse(houseData)
+
           editable.value = {}
           setFormDefaults()
           Modal.getOrCreateInstance('#formModal').hide()
@@ -77,10 +85,14 @@ export default {
       async editHouse(){
         try {
           const houseData = editable.value
+
           await housesService.editHouse(houseData)
+
           editable.value = {}
           setFormDefaults()
+
           Modal.getOrCreateInstance('#formModal').hide()
+
         } catch (error) {
           Pop.error(error.message)
         }

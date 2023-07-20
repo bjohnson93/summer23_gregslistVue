@@ -30,6 +30,10 @@ class HousesService {
     const houseIndex = AppState.houses.findIndex(house => house.id == houseData.id)
     AppState.houses.splice(houseIndex, 1, house)
   }
+
+  setHouseToEdit(houseToEdit) {
+    AppState.activeHouse = houseToEdit
+  }
 }
 
 export const housesService = new HousesService()
